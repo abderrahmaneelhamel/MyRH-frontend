@@ -1,0 +1,111 @@
+<div class="card">
+    <app-popup name="Add Applicant" color="blue" title="Add Applicant">
+      <form [formGroup]="applicantForm" class="p-4 md:p-5" (ngSubmit)="onSubmit()">
+        <div class="grid gap-4 mb-4 grid-cols-2">
+          <div class="col-span-2 sm:col-span-1">
+            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
+            <input type="text" formControlName="firstName" id="firstName" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
+            <input type="text" formControlName="lastName" id="lastName" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input type="text" formControlName="email" id="email" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="level" class="block mb-2 text-sm font-medium text-gray-900">level</label>
+            <input type="text" formControlName="level" id="level" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="profile" class="block mb-2 text-sm font-medium text-gray-900">profile</label>
+            <input type="text" formControlName="profile" id="profile" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="city" class="block mb-2 text-sm font-medium text-gray-900">city</label>
+            <input type="text" formControlName="city" id="city" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+          </div>
+        </div>
+        <button type="submit" class="mt-3 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+          <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+          </svg>
+          Add Applicant
+        </button>
+      </form>
+    </app-popup>
+<div class="card">
+    <p-table
+        #dt2
+        [value]="applicants"
+        dataKey="id"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [loading]="loading"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['firstnName', 'lastName', 'email', 'level', 'profile', 'city']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+    >
+    
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:22%">First Name</th>
+                <th style="width:22%">Last Name</th>
+                <th style="width:22%">Email</th>
+                <th style="width:12%">Level</th>
+                <th style="width:10%">Profile</th>
+                <th style="width:10%">City</th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="firstName"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="lastName"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="email"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="level"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="profile"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="city"></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-applicant>
+            <tr>
+                <td>
+                    {{ applicant.firstName }}
+                </td>
+                <td>
+                    {{ applicant.lastName }}
+                </td>
+                <td>
+                    {{ applicant.email }}
+                </td>
+                <td>
+                    {{ applicant.level }}
+                </td>
+                <td>
+                    {{ applicant.profile }}
+                </td>
+                <td>
+                    {{ applicant.city }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No applicants found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
