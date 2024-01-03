@@ -25,7 +25,7 @@ export class ApplicantService {
     return this.http.post<Applicant>(this.apiUrl, applicant);
   }
 
-  applyToJob(application: Application): Observable<Application> {
+  applyToJob(application: any): Observable<Application> {
     return this.http.post<Application>(`${this.apiUrl}/apply`, application);
   }
 }

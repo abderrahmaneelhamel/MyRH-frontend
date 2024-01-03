@@ -10,7 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TableTestComponent } from './components/tables/table-test/table-test.component';
 import { JobTableComponent } from './components/tables/job-table/job-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApplicantsTableComponent } from './components/tables/applicants-table/applicants-table.component';
@@ -21,11 +20,13 @@ import { JobsComponent } from './pages/jobs/jobs.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CardComponent } from './components/card/card.component';
+import { ApplyComponent } from './pages/apply/apply.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableTestComponent,
     JobTableComponent,
     ApplicantsTableComponent,
     CompaniesTableComponent,
@@ -34,7 +35,10 @@ import { FooterComponent } from './components/footer/footer.component';
     JobsComponent,
     PopupComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    CardComponent,
+    ApplyComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

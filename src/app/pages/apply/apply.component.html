@@ -1,0 +1,14 @@
+<div class="w-full flex flex-col justify-center items-center">
+    <h2>Apply for Job</h2>
+    <app-card class="w-full flex justify-center" [job]="job" [botton]="false"></app-card>
+  
+    <form [formGroup]="applicationForm" class="w-full" (ngSubmit)="applyForJob()">
+      <div class="mb-4">
+        <label for="message" class="block w-full text-sm font-medium text-gray-700">Message</label>
+        <textarea id="message" formControlName="message" rows="4" class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
+      </div>  
+      <div class="mt-4 flex justify-center">
+        <button type="submit" class="text-blue-600 bg-blue-300 border border-blue-200 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-125 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">Apply</button>
+      </div>
+    </form>
+  </div>  
