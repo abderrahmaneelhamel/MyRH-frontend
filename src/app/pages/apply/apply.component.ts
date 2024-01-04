@@ -6,6 +6,7 @@ import { ApplicantService } from 'src/app/services/ApplicantService/applicant.se
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Application } from 'src/app/interfaces/Application';
 import { Applicant } from 'src/app/interfaces/Applicant'; 
+import Swal from 'sweetalert2';
  
 @Component({
   selector: 'app-apply',
@@ -47,7 +48,6 @@ export class ApplyComponent implements OnInit {
   initializeForm() {
     this.applicationForm = this.fb.group({
       message: this.fb.control('', [Validators.required]),
-  
     });
   }
 
@@ -59,13 +59,15 @@ export class ApplyComponent implements OnInit {
         job_id: this.job.id,
         applicant_id: 1,
       };
-      console.log('====================================');
-      console.log(applicationData);
-      console.log('====================================');
 
       this.ApplicantService.applyToJob(applicationData).subscribe(
         (application) => {
           console.log('Application submitted successfully:', application);
+          Swal.fire({
+            icon: 'success',
+            title: 'success',
+            text: 'Application submitted successfully',
+          });
           this.router.navigate(['/jobs']);
         },
         (error) => {

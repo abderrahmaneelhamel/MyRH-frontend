@@ -1,0 +1,125 @@
+<div class="card w-full overflow-x-scroll">
+
+    <app-popup name="Add Job" color="blue" title="Add Job">
+        <form [formGroup]="jobForm" class="p-4 md:p-5" (ngSubmit)="onSubmit()">
+            <div class="grid gap-4 mb-4 grid-cols-2">
+              <div class="col-span-2 sm:col-span-1">
+                <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Title</label>
+                <input type="text" formControlName="title" id="title" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+                <textarea formControlName="description" id="description" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required=""></textarea>
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label for="level" class="block mb-2 text-sm font-medium text-gray-900">Level</label>
+                <input type="text" formControlName="level" id="level" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label for="city" class="block mb-2 text-sm font-medium text-gray-900">city</label>
+                <input type="text" formControlName="city" id="city" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label for="salary" class="block mb-2 text-sm font-medium text-gray-900">Salary</label>
+                <input type="number" formControlName="salary" id="salary" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label for="profile" class="block mb-2 text-sm font-medium text-gray-900">Profile</label>
+                <input type="text" formControlName="profile" id="profile" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+              </div>
+            </div>
+            <button type="submit" class="mt-3 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+              <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+              </svg>
+              Add Job
+            </button>
+          </form>      
+      </app-popup>
+      
+        <p-table
+            #jobTable
+            [value]="jobs"
+            dataKey="id"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loading"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [tableStyle]="{ 'min-width': '75rem' }"
+        >
+            <ng-template pTemplate="header" class="w-full overflow-x-scroll">
+                <tr>
+                    <th style="width: 25%">Title</th>
+                    <th style="width: 25%">Company</th>
+                    <th style="width: 15%">Description</th>
+                    <th style="width: 8%">Level</th>
+                    <th style="width: 5%">Salary</th>
+                    <th style="width: 8%">Profile</th>
+                    <th style="width: 5%">City</th>
+                    <th style="width: 10%">Status</th>
+                </tr>
+                <tr>
+                    <th>
+                        <p-columnFilter type="text" field="title"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="company.name"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="description"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="level"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="salary"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="profile"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="city"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="status"></p-columnFilter>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-job>
+                <tr>
+                    <td>
+                        {{ job.title }}
+                    </td>
+                    <td>
+                        {{ job.company.name }}
+                    </td>
+                    <td>
+                        {{ job.description }}
+                    </td>
+                    <td>
+                        {{ job.level }}
+                    </td>
+                    <td>
+                        {{ job.salary }}
+                    </td>
+                    <td>
+                        {{ job.profile }}
+                    </td>
+                    <td>
+                        {{ job.city }}
+                    </td>
+                    <td>
+                        {{ job.status }}
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No jobs found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    

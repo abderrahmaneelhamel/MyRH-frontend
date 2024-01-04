@@ -34,6 +34,7 @@ export class ApplicantsTableComponent implements OnInit {
       firstName: this.fb.control('', [Validators.required]),
       lastName: this.fb.control('', [Validators.required]),
       email: this.fb.control('', [Validators.required, Validators.email]),
+      password: this.fb.control('', [Validators.required, Validators.email]),
       level: this.fb.control('', [Validators.required]),
       profile: this.fb.control('', [Validators.required]),
       city: this.fb.control('', [Validators.required]),

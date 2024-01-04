@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap, throwError } from 'rxjs';
+import { Observable} from 'rxjs';
 import { Company } from 'src/app/interfaces/Company';
 
 
@@ -18,14 +18,6 @@ export class CompanyService {
 
   getCompanyById(id: number): Observable<Company> {
     return this.http.get<Company>(`${this.apiUrl}/${id}`);
-  }
-
-
-  private uploadImage(imageData: FormData): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
-    });
-    return this.http.post<any>(`${this.apiUrl}/addImage`, imageData, { headers });
   }
 
   addCompany(companyData: any): Observable<Company> {

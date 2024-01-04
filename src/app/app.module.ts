@@ -23,6 +23,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CardComponent } from './components/card/card.component';
 import { ApplyComponent } from './pages/apply/apply.component';
 import { LoginComponent } from './pages/login/login.component';
+import { StoreModule } from '@ngrx/store';
+import { authReducer } from './auth.reducer';
+import { CompanyComponent } from './pages/company/company.component';
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -38,11 +42,14 @@ import { LoginComponent } from './pages/login/login.component';
     FooterComponent,
     CardComponent,
     ApplyComponent,
-    LoginComponent
+    LoginComponent,
+    CompanyComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StoreModule.forRoot({ auth: authReducer }),
     BrowserAnimationsModule,
     TableModule,
     TagModule,
