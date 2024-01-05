@@ -90,7 +90,7 @@
             <ng-template pTemplate="body" let-job>
                 <tr>
                     <td>
-                        {{ job.title }}
+                        <a [routerLink]="['/job/',job.id]" >{{ job.title }}</a>
                     </td>
                     <td>
                         {{ job.company.name }}
@@ -113,6 +113,7 @@
                     <td>
                         {{ job.status }}
                     </td>
+                  
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
 
 @Component({
@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
 
   Login: boolean = true;
 
-  constructor(private primengConfig: PrimeNGConfig, private router: Router, private route: ActivatedRoute) {}
+  constructor(private primengConfig: PrimeNGConfig, private router: Router) {}
 
   ngOnInit() {
     this.checkLogin();
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   checkLogin() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if(event.url === '/login'){
+        if(event.url === '/login' || event.url === '/unauthorized'){
           this.Login = false;
         }else{
           this.Login = true;

@@ -27,6 +27,7 @@ import { StoreModule } from '@ngrx/store';
 import { authReducer } from './auth.reducer';
 import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
+import { JobComponent } from './pages/job/job.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
     ApplyComponent,
     LoginComponent,
     CompanyComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    JobComponent
   ],
   imports: [
     BrowserModule,

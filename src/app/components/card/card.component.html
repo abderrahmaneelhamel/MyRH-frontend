@@ -9,10 +9,16 @@
         </div>
 
         <div class="mt-4 flex justify-between">
+        <div class="flex flex-col">
             <div class="flex items-start flex-col justify-center">
                 <div class="mx-2 font-semibold text-gray-700" tabindex="0" role="link">{{ job.company.name }}</div>
-                <span class="mx-1 text-xs text-indigo-500">{{ job.level }}</span>
+                <span class="mx-2 text-sm text-indigo-500">{{ job.level }}</span>
             </div>
+            <div class="flex items-start justify-center">
+                <div class="mx-2 font-semibold text-gray-700" tabindex="0" role="link">Salary : </div>
+                <span class="mx-1 text-indigo-500">{{ job.salary }}</span>
+            </div>
+        </div>
             <button *ngIf="botton" class="text-blue-600 bg-blue-300 border border-blue-200 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-125 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group" (click)="onClick()">
                 <span class="bg-blue-300 shadow-blue-200 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                 Apply

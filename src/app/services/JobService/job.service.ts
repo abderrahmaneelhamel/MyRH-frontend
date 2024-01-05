@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from '../../interfaces/Job';
+import { Application } from 'src/app/interfaces/Application';
+import { Status } from 'src/app/interfaces/Status';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +21,15 @@ export class JobService {
     return this.http.get<Job>(`${this.apiUrl}/${id}`);
   }
 
+  getApplicationById(id: number): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.apiUrl}/applications/${id}`);
+  }
+
   addJob(job: any): Observable<Job> {
-    console.log('====================================');
-    console.log(job);
-    console.log('====================================');
     return this.http.post<Job>(this.apiUrl, job);
+  }
+
+  updateApplication(application : any): Observable<Application[]> {
+    return this.http.post<Application[]>(`${this.apiUrl}/updateApplication`, application);
   }
 }

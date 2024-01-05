@@ -21,8 +21,17 @@ export class ApplicantService {
     return this.http.get<Applicant>(`${this.apiUrl}/${id}`);
   }
 
-  addApplicant(applicant: Applicant): Observable<Applicant> {
-    return this.http.post<Applicant>(this.apiUrl, applicant);
+  addApplicant(applicantData: any): Observable<Applicant> {
+    const applicantForm = new FormData();
+          applicantForm.append('firstName', applicantData.firstName);
+          applicantForm.append('lastName', applicantData.lastName);
+          applicantForm.append('password', applicantData.password);
+          applicantForm.append('email', applicantData.email);
+          applicantForm.append('level', applicantData.level);
+          applicantForm.append('profile', applicantData.profile);
+          applicantForm.append('city', applicantData.city);
+          applicantForm.append('cv', applicantData.cv as File);
+    return this.http.post<Applicant>(this.apiUrl, applicantForm);
   }
 
   applyToJob(application: any): Observable<Application> {

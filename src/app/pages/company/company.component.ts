@@ -4,7 +4,6 @@ import { Job } from 'src/app/interfaces/Job';
 import { Status } from 'src/app/interfaces/Status';
 import { JobService } from 'src/app/services/JobService/job.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CompanyService } from 'src/app/services/CompanyService/company.service';
 import { Company } from 'src/app/interfaces/Company';
 import { PopupComponent } from 'src/app/components/popup/popup.component';
 import { Store } from '@ngrx/store';
@@ -25,7 +24,7 @@ export class CompanyComponent  implements OnInit {
 
   jobForm!: FormGroup;
 
-  constructor(private jobService: JobService, private fb: FormBuilder,private companyService: CompanyService,private store: Store) {}
+  constructor(private jobService: JobService, private fb: FormBuilder,private store: Store) {}
 
   ngOnInit() {
     this.store.select(selectLoggedInUser).subscribe(loggedInCompany => {

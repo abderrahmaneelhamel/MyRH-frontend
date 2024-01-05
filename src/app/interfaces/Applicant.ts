@@ -7,4 +7,5 @@ export interface Applicant {
   level: string;
   profile: string;
   city: string;
+  cv: string;
 }

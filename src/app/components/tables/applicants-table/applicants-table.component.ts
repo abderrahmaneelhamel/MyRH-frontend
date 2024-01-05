@@ -38,13 +38,28 @@ export class ApplicantsTableComponent implements OnInit {
       level: this.fb.control('', [Validators.required]),
       profile: this.fb.control('', [Validators.required]),
       city: this.fb.control('', [Validators.required]),
+      cv: this.fb.control(null, [Validators.required]),
     });
   }
 
-  onSubmit() {
-    const formData = this.applicantForm.value;
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    this.applicantForm.patchValue({ cv: file });
+  }
 
-    this.applicantService.addApplicant(formData).subscribe(
+  onSubmit() {
+    const applicantData = {
+      firstName: this.applicantForm.get('firstName')!.value,
+      lastName: this.applicantForm.get('lastName')!.value,
+      email: this.applicantForm.get('email')!.value,
+      password: this.applicantForm.get('password')!.value,
+      level: this.applicantForm.get('level')!.value,
+      profile: this.applicantForm.get('profile')!.value,
+      city: this.applicantForm.get('city')!.value,
+      cv: this.applicantForm.get('cv')!.value,
+    };
+
+    this.applicantService.addApplicant(applicantData).subscribe(
       (applicant) => {
         this.applicants.push(applicant);
         this.applicantForm.reset();

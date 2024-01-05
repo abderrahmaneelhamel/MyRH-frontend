@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthGuard } from './AuthGuard';
 import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
+import { JobComponent } from './pages/job/job.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,6 +29,12 @@ const routes: Routes = [
     component: JobsComponent,
     canActivate: [AuthGuard],
     data: { role: 'applicant' },
+  },
+  {
+    path: 'job/:id',
+    component: JobComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'company' },
   },
   {
     path: 'apply',

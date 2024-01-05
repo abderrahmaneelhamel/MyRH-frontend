@@ -4,9 +4,11 @@ import { Job } from 'src/app/interfaces/Job';
 import { JobService } from 'src/app/services/JobService/job.service';
 import { ApplicantService } from 'src/app/services/ApplicantService/applicant.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Application } from 'src/app/interfaces/Application';
-import { Applicant } from 'src/app/interfaces/Applicant'; 
+import { selectLoggedInUser } from 'src/app/auth.selectors'; 
 import Swal from 'sweetalert2';
+import { Store } from '@ngrx/store';
+import { Applicant } from 'src/app/interfaces/Applicant';
+import { Status } from 'src/app/interfaces/Status';
  
 @Component({
   selector: 'app-apply',
@@ -17,16 +19,23 @@ export class ApplyComponent implements OnInit {
   jobId!: number;
   job!: Job;
   applicationForm!: FormGroup;
+  applicant! : Applicant;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private jobService: JobService,
     private fb: FormBuilder,
-    private ApplicantService: ApplicantService
+    private ApplicantService: ApplicantService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
+    this.store.select(selectLoggedInUser).subscribe(loggedInApplicant => {
+      if (loggedInApplicant) {
+        this.applicant = loggedInApplicant;
+      }
+    });
     this.route.queryParams.subscribe(params => {
       this.jobId = +params['jobId'];
     });
@@ -57,7 +66,8 @@ export class ApplyComponent implements OnInit {
         date: new Date(),
         message: this.applicationForm.value.message,
         job_id: this.job.id,
-        applicant_id: 1,
+        applicant_id: this.applicant.id,
+        status: Status.PENDING,
       };
 
       this.ApplicantService.applyToJob(applicationData).subscribe(

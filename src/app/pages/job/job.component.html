@@ -1,0 +1,38 @@
+<!-- job.component.html -->
+<div class="container mx-auto mt-8">
+    <h2 class="text-2xl font-semibold mb-4">Applications for Job {{ jobId }}</h2>
+    <div *ngFor="let application of applications" class="bg-white rounded-md shadow-md p-6 mb-4">
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold mb-2">Job Information</h3>
+        <app-card class="w-full flex justify-center" [job]="application.job" [botton]="false"></app-card>
+      </div>
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold mb-2">Applicant Information</h3>
+        <p><strong>Name:</strong> {{ application.applicant.firstName }} {{ application.applicant.lastName }}</p>
+        <p><strong>Email:</strong> {{ application.applicant.email }}</p>
+        <p><strong>City:</strong> {{ application.applicant.city }}</p>
+        <p><strong>Profile:</strong> {{ application.job.profile }}</p>
+        <p><strong>Level:</strong> {{ application.job.level }}</p>
+      </div>
+  
+      <div>
+        <h3 class="text-lg font-semibold mb-2">Application Information</h3>
+        <p><strong>Date:</strong> {{ application.date | date:'medium' }}</p>
+        <p><strong>Status:</strong> {{ application.status }}</p>
+        <p><strong>Message:</strong> {{ application.message }}</p>
+      </div>
+      <div class="mt-4">
+        <button (click)="acceptApplication(application?.id)" class="px-4 py-2 mr-4 bg-green-500 text-white rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800">
+            Accept
+        </button>
+        <button (click)="refuseApplication(application?.id)" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800">
+            Refuse
+        </button>
+        <!-- Download CV link -->
+        <a [href]="getfile(application?.applicant?.cv)" download class="ml-4 text-blue-500 hover:underline">
+            Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+  
