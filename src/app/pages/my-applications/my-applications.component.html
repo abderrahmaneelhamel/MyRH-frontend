@@ -1,0 +1,84 @@
+<p-table
+  #applicationTable
+  [value]="applications"
+  dataKey="id"
+  [rows]="10"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 25, 50]"
+  [loading]="loading"
+  [paginator]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [tableStyle]="{ 'min-width': '75rem' }"
+>
+  <ng-template pTemplate="header" class="w-full overflow-x-scroll">
+    <tr>
+      <th style="width: 25%">Job Title</th>
+      <th style="width: 25%">Company</th>
+      <th style="width: 15%">Description</th>
+      <th style="width: 8%">Level</th>
+      <th style="width: 5%">Salary</th>
+      <th style="width: 8%">Profile</th>
+      <th style="width: 5%">City</th>
+      <th style="width: 10%">Status</th>
+    </tr>
+    <tr>
+      <th>
+        <p-columnFilter type="text" field="job.title"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="job.company.name"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="job.description"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="job.level"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="job.salary"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="job.profile"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="job.city"></p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter type="text" field="status"></p-columnFilter>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-application>
+    <tr>
+      <td>
+        <a [routerLink]="['/job/', application.job.id]">{{ application.job.title }}</a>
+      </td>
+      <td>
+        {{ application.job.company.name }}
+      </td>
+      <td>
+        {{ application.job.description }}
+      </td>
+      <td>
+        {{ application.job.level }}
+      </td>
+      <td>
+        {{ application.job.salary }}
+      </td>
+      <td>
+        {{ application.job.profile }}
+      </td>
+      <td>
+        {{ application.job.city }}
+      </td>
+      <td>
+        {{ application.status }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">No applications found.</td>
+    </tr>
+  </ng-template>
+</p-table>

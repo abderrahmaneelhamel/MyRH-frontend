@@ -29,6 +29,7 @@ import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { JobComponent } from './pages/job/job.component';
 import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans.component';
+import { MyApplicationsComponent } from './pages/my-applications/my-applications.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SubscriptionPlansComponent } from './pages/subscription-plans/subscript
     CompanyComponent,
     UnauthorizedComponent,
     JobComponent,
-    SubscriptionPlansComponent
+    SubscriptionPlansComponent,
+    MyApplicationsComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { JobComponent } from './pages/job/job.component';
 import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans.component';
+import { MyApplicationsComponent } from './pages/my-applications/my-applications.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -46,6 +47,12 @@ const routes: Routes = [
   {
     path: 'apply',
     component: ApplyComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'applicant' },
+  },
+  {
+    path: 'my-applications',
+    component: MyApplicationsComponent,
     canActivate: [AuthGuard],
     data: { role: 'applicant' },
   },

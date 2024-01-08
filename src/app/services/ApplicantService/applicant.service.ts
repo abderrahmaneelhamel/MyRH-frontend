@@ -37,4 +37,8 @@ export class ApplicantService {
   applyToJob(application: any): Observable<Application> {
     return this.http.post<Application>(`${this.apiUrl}/apply`, application);
   }
+
+  getApplicationsByApplicantId(id: number): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.apiUrl}/applications/${id}`);
+  }
 }
