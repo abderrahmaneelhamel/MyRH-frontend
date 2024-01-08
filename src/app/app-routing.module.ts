@@ -9,6 +9,7 @@ import { AuthGuard } from './AuthGuard';
 import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { JobComponent } from './pages/job/job.component';
+import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,6 +34,12 @@ const routes: Routes = [
   {
     path: 'job/:id',
     component: JobComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'company' },
+  },
+  {
+    path: 'subscription-plans',
+    component: SubscriptionPlansComponent,
     canActivate: [AuthGuard],
     data: { role: 'company' },
   },

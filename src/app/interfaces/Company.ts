@@ -1,3 +1,5 @@
+import { Plan } from "./Plan";
+
 export interface Company {
   id?: number;
   name: string;
@@ -6,5 +8,6 @@ export interface Company {
   address: string;
   phone: string;
   image: string;
+  plan: Plan;
 }
 

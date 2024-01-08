@@ -31,5 +31,13 @@ export class CompanyService {
     return this.http.post<Company>(this.apiUrl, companyForm);
   }
 
+  updateCompanyPlan(companyId: number, planId: number): Observable<Company> {
+    const credentials = {
+      companyId: companyId.toString(),
+      planId: planId.toString()
+    };
+
+    return this.http.post<Company>(`${this.apiUrl}/update-plan`, credentials);
+  }
 
 }

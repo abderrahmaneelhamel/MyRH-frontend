@@ -8,6 +8,8 @@ import { Company } from 'src/app/interfaces/Company';
 import { PopupComponent } from 'src/app/components/popup/popup.component';
 import { Store } from '@ngrx/store';
 import { selectLoggedInUser } from 'src/app/auth.selectors';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -24,7 +26,7 @@ export class CompanyComponent  implements OnInit {
 
   jobForm!: FormGroup;
 
-  constructor(private jobService: JobService, private fb: FormBuilder,private store: Store) {}
+  constructor(private jobService: JobService, private fb: FormBuilder,private store: Store,private router: Router) {}
 
   ngOnInit() {
     this.store.select(selectLoggedInUser).subscribe(loggedInCompany => {
@@ -59,10 +61,20 @@ export class CompanyComponent  implements OnInit {
       (job) => {
         this.jobs.push(job);
         this.jobForm.reset();
+        this.initializeForm();
         this.popupComponent.Toggle();
       },
       (error) => {
         console.error('Error creating job:', error);
+
+        if (error.status === 409) {
+          Swal.fire({
+            icon: 'error',
+            title: 'over the limit',
+            text: 'You have reached the maximum number of jobs for this plan',
+          });
+          this.router.navigate(['/subscription-plans']);
+        }
       }
     );
   }

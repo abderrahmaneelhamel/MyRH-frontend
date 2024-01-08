@@ -28,6 +28,7 @@ import { authReducer } from './auth.reducer';
 import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { JobComponent } from './pages/job/job.component';
+import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { JobComponent } from './pages/job/job.component';
     LoginComponent,
     CompanyComponent,
     UnauthorizedComponent,
-    JobComponent
+    JobComponent,
+    SubscriptionPlansComponent
   ],
   imports: [
     BrowserModule,
