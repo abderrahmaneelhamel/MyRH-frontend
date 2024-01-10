@@ -57,14 +57,15 @@
     >
         <ng-template pTemplate="header" class="w-full overflow-x-scroll">
             <tr>
-                <th style="width: 25%">Title</th>
-                <th style="width: 25%">Company</th>
-                <th style="width: 15%">Description</th>
+                <th style="width: 15%">Title</th>
+                <th style="width: 15%">Company</th>
+                <th style="width: 30%">Description</th>
                 <th style="width: 8%">Level</th>
-                <th style="width: 5%">Salary</th>
+                <th style="width: 3%">Salary</th>
                 <th style="width: 8%">Profile</th>
                 <th style="width: 5%">City</th>
                 <th style="width: 10%">Status</th>
+                <th style="width: 5%">Action</th>
             </tr>
             <tr>
                 <th>
@@ -74,13 +75,11 @@
                     <p-columnFilter type="text" field="company.name"></p-columnFilter>
                 </th>
                 <th>
-                    <p-columnFilter type="text" field="description"></p-columnFilter>
                 </th>
                 <th>
                     <p-columnFilter type="text" field="level"></p-columnFilter>
                 </th>
                 <th>
-                    <p-columnFilter type="text" field="salary"></p-columnFilter>
                 </th>
                 <th>
                     <p-columnFilter type="text" field="profile"></p-columnFilter>
@@ -90,6 +89,8 @@
                 </th>
                 <th>
                     <p-columnFilter type="text" field="status"></p-columnFilter>
+                </th>
+                <th>
                 </th>
             </tr>
         </ng-template>
@@ -118,6 +119,14 @@
                 </td>
                 <td>
                     {{ job.status }}
+                </td>
+                <td class="flex overflow-hidden h-full">
+                    <button pBotton (click)="acceptJob(job)" class="px-4 py-2 mr-4 bg-green-500 text-white rounded hover:bg-green-700 focus:outline-none focus:shadow-outline-green active:bg-green-800">
+                        Accept
+                    </button>
+                    <button pBotton (click)="refuseJob(job)" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800">
+                        Refuse
+                    </button>
                 </td>
             </tr>
         </ng-template>

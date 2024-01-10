@@ -1,14 +1,27 @@
 <div class="w-full flex flex-col justify-center items-center">
-    <h2>Apply for Job</h2>
+    <h2 class="text-2xl my-10 font-bold">Apply for this Job</h2>
     <app-card class="w-full flex justify-center" [job]="job" [botton]="false"></app-card>
   
     <form [formGroup]="applicationForm" class="w-full" (ngSubmit)="applyForJob()">
       <div class="mb-4">
-        <label for="message" class="block w-full text-sm font-medium text-gray-700">Message</label>
+        <label for="message" class="block w-full text-xl font-medium text-gray-700">Message</label>
         <textarea id="message" formControlName="message" rows="4" class="mt-1 p-2 border border-gray-300 rounded-md w-full"></textarea>
       </div>  
       <div class="mt-4 flex justify-center">
-        <button type="submit" class="text-blue-600 bg-blue-300 border border-blue-200 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-125 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group">Apply</button>
+        <button type="submit" class="continue-application">
+          <div>
+              <div class="pencil"></div>
+              <div class="folder">
+                  <div class="top">
+                      <svg viewBox="0 0 24 27">
+                          <path d="M1,0 L23,0 C23.5522847,-1.01453063e-16 24,0.44771525 24,1 L24,8.17157288 C24,8.70200585 23.7892863,9.21071368 23.4142136,9.58578644 L20.5857864,12.4142136 C20.2107137,12.7892863 20,13.2979941 20,13.8284271 L20,26 C20,26.5522847 19.5522847,27 19,27 L1,27 C0.44771525,27 6.76353751e-17,26.5522847 0,26 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z"></path>
+                      </svg>
+                  </div>
+                  <div class="paper"></div>
+              </div>
+          </div>
+          Apply Application
+      </button>
       </div>
     </form>
   </div>  

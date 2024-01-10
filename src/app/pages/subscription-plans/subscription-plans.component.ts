@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Company } from 'src/app/interfaces/Company';
-import { selectLoggedInUser } from 'src/app/auth.selectors';
+import { selectLoggedInUser } from 'src/app/NGRX/auth.selectors';
 import { CompanyService } from 'src/app/services/CompanyService/company.service';
 import { Plan } from 'src/app/interfaces/Plan';
 import { Router } from '@angular/router';
@@ -39,7 +39,7 @@ export class SubscriptionPlansComponent implements OnInit {
     });
   }
 
-  async payWithCard(){
+  async payWithCard() {
     const { token, error } = await this.stripeService.createToken(this.card);
 
     if (error) {

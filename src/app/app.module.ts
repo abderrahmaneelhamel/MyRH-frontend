@@ -24,7 +24,7 @@ import { CardComponent } from './components/card/card.component';
 import { ApplyComponent } from './pages/apply/apply.component';
 import { LoginComponent } from './pages/login/login.component';
 import { StoreModule } from '@ngrx/store';
-import { authReducer } from './auth.reducer';
+import { authReducer } from './NGRX/auth.reducer';
 import { CompanyComponent } from './pages/company/company.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { JobComponent } from './pages/job/job.component';
@@ -50,7 +50,7 @@ import { MyApplicationsComponent } from './pages/my-applications/my-applications
     UnauthorizedComponent,
     JobComponent,
     SubscriptionPlansComponent,
-    MyApplicationsComponent
+    MyApplicationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,9 +63,9 @@ import { MyApplicationsComponent } from './pages/my-applications/my-applications
     MultiSelectModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

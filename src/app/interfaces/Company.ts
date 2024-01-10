@@ -1,4 +1,5 @@
 import { Plan } from "./Plan";
+import { State } from "./State";
 
 export interface Company {
   id?: number;
@@ -9,5 +10,6 @@ export interface Company {
   phone: string;
   image: string;
   plan: Plan;
+  state: State;
 }
 

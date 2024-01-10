@@ -4,22 +4,22 @@ import { Job } from 'src/app/interfaces/Job';
 import { JobService } from 'src/app/services/JobService/job.service';
 import { ApplicantService } from 'src/app/services/ApplicantService/applicant.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { selectLoggedInUser } from 'src/app/auth.selectors'; 
+import { selectLoggedInUser } from 'src/app/NGRX/auth.selectors';
 import Swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
 import { Applicant } from 'src/app/interfaces/Applicant';
 import { Status } from 'src/app/interfaces/Status';
- 
+
 @Component({
   selector: 'app-apply',
   templateUrl: './apply.component.html',
-  styleUrls: ['./apply.component.css']
+  styleUrls: ['./apply.component.css'],
 })
 export class ApplyComponent implements OnInit {
   jobId!: number;
   job!: Job;
   applicationForm!: FormGroup;
-  applicant! : Applicant;
+  applicant!: Applicant;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,12 +31,12 @@ export class ApplyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(selectLoggedInUser).subscribe(loggedInApplicant => {
+    this.store.select(selectLoggedInUser).subscribe((loggedInApplicant) => {
       if (loggedInApplicant) {
         this.applicant = loggedInApplicant;
       }
     });
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.jobId = +params['jobId'];
     });
     this.getJob();

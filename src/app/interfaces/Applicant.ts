@@ -1,3 +1,5 @@
+import { State } from "./State";
+
 export interface Applicant {
   id?: number;
   firstName: string;
@@ -8,4 +10,5 @@ export interface Applicant {
   profile: string;
   city: string;
   cv: string;
+  state: State;
 }

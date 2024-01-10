@@ -70,4 +70,47 @@ export class JobTableComponent implements OnInit {
       }
     );
   }
+
+  acceptJob(job : Job){
+    const JobData = {
+      id: job.id,
+      title: job.title,
+      description: job.description,
+      level: job.level,
+      salary: job.salary,
+      profile: job.profile,
+      city: job.city,
+      status: Status.ACCEPTED,
+    };
+    this.jobService.updateJob(JobData).subscribe(
+      (jobs) => {
+        this.jobs = jobs;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    
+  }
+  refuseJob(job : Job){
+    const JobData = {
+      id: job.id,
+      title: job.title,
+      description: job.description,
+      level: job.level,
+      salary: job.salary,
+      profile: job.profile,
+      city: job.city,
+      status: Status.DENIED,
+    };
+    this.jobService.updateJob(JobData).subscribe(
+      (jobs) => {
+        this.jobs = jobs;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    
+  }
 }

@@ -1,20 +1,25 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Store, createFeatureSelector } from '@ngrx/store';
-import { AuthState } from 'src/app/auth.reducer';
-import * as AuthActions from 'src/app/auth.actions'
+import { AuthState } from 'src/app/NGRX/auth.reducer';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/authService/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   isOpen: boolean = false;
 
   authState$ = this.store.select(createFeatureSelector<AuthState>('auth'));
 
-  constructor(private store: Store,private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private authService : AuthService
+  ) {}
 
   ngOnInit(): void {
     this.authState$.subscribe(() => {
@@ -27,7 +32,19 @@ export class NavbarComponent implements OnInit{
   }
 
   logout() {
-    this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/login']);
+    this.authState$.subscribe(
+      (state) =>{
+        switch (state.role) {
+          case 'admin':
+            this.authService.adminLogout(state.user.id);
+            break;
+          case 'company':
+            this.authService.companyLogout(state.user.id);
+            break;
+          case 'applicant':
+            this.authService.applicantLogout(state.user.id);
+            break;
+        }
+      })
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/interfaces/Company';
 import { Job } from 'src/app/interfaces/Job';
+import { Status } from 'src/app/interfaces/Status';
 import { CompanyService } from 'src/app/services/CompanyService/company.service';
 import { JobService } from 'src/app/services/JobService/job.service';
 
@@ -26,8 +27,9 @@ export class JobsComponent implements OnInit {
   loadJobs() {
     this.jobService.getAllJobs().subscribe(
       (data: Job[]) => {
-        this.jobs = data;
-        this.filteredJobs = data;
+        this.jobs = data.filter(job => job.status === Status.ACCEPTED);
+        this.jobs = this.jobs.filter(job => job.status === Status.ACCEPTED);
+        this.filteredJobs = this.jobs;
       },
       error => {
         console.error('Error loading jobs:', error);

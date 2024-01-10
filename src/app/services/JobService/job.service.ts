@@ -31,4 +31,8 @@ export class JobService {
   updateApplication(application : any): Observable<Application[]> {
     return this.http.post<Application[]>(`${this.apiUrl}/updateApplication`, application);
   }
+  
+  updateJob(job : any): Observable<Job[]> {
+    return this.http.post<Job[]>(`${this.apiUrl}/updateJob`, job);
+  }
 }

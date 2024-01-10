@@ -6,7 +6,9 @@
         <option *ngFor="let company of companies" [value]="company.name">{{ company.name }}</option>
       </select>
     </div>
-  
+      <div *ngIf="filteredJobs.length === 0" class="flex justify-center items-center">
+          <h1 class="text-gray-700">No Jobs to show</h1>
+      </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <app-card *ngFor="let job of filteredJobs" [job]="job" (applyForJob)="applyForJob($event)"></app-card>
     </div>
