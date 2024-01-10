@@ -31,12 +31,12 @@ export class CompanyService {
     return this.http.post<Company>(this.apiUrl, companyForm);
   }
 
-  updateCompanyPlan(companyId: number, planId: number): Observable<Company> {
+  updateCompanyPlan(companyId: number, planId: number, cardToken: string): Observable<Company> {
     const credentials = {
       companyId: companyId.toString(),
-      planId: planId.toString()
+      planId: planId.toString(),
+      cardToken: cardToken
     };
-
     return this.http.post<Company>(`${this.apiUrl}/update-plan`, credentials);
   }
 

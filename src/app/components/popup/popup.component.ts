@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class PopupComponent implements OnInit {
   hidden : boolean = true;
+  @Input() show : boolean = true;
   @Input() color!: string;
   @Input() name!: string;
   @Input() title!: string;
