@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./company.component.css'],
 })
 export class CompanyComponent implements OnInit {
+  
   @ViewChild('jobTable') jobTable!: Table;
   @ViewChild(PopupComponent) popupComponent!: PopupComponent;
   jobs: Job[] = [];

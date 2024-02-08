@@ -7,12 +7,15 @@ import { Admin } from 'src/app/interfaces/Admin';
 import Swal from 'sweetalert2';
 import { Company } from 'src/app/interfaces/Company';
 import { Applicant } from 'src/app/interfaces/Applicant';
+import { State } from 'src/app/interfaces/State';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api';
+  private jwtHelper = new JwtHelperService();
 
   constructor(
     private http: HttpClient,
@@ -20,88 +23,130 @@ export class AuthService {
     private router: Router
   ) {}
 
-  authenticateAdmin(credentials: { email: string; password: string }) {
-    this.http
-      .post<any>(`${this.apiUrl}/admin/authinticate`, credentials)
-      .subscribe(
-        (response: any) => {
-          const authenticatedAdmin: Admin = response;
-          this.store.dispatch(
-            AuthActions.loginSuccess({
-              user: authenticatedAdmin,
-              role: 'admin',
-            })
-          );
-          this.router.navigate(['/dashboard']);
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Authentication Failed',
-            text: 'Invalid email or password',
-          });
-        }
-      );
+  authenticate(credentials: { email: string; password: string; role: string }) {
+    const authenticateUrl = `${this.apiUrl}/auth/authenticate`;
+
+    this.http.post<any>(authenticateUrl, credentials).subscribe(
+      (response: any) => {
+        const decodedToken = this.jwtHelper.decodeToken(response.access_token);
+        const authenticatedUser = this.mapAuthenticatedUser(decodedToken);
+        this.store.dispatch(
+          AuthActions.loginSuccess({
+            user: authenticatedUser,
+            role: decodedToken.role.toLowerCase(),
+            accessToken: response.access_token,
+            refreshToken: response.refresh_token,
+          })
+        );
+        this.router.navigate([`/`]);
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Failed',
+          text: 'Invalid email or password',
+        });
+      }
+    );
   }
-  authenticateCompany(credentials: { email: string; password: string }) {
-    this.http
-      .post<any>(`${this.apiUrl}/company/authinticate`, credentials)
-      .subscribe(
-        (response: any) => {
-          const authenticatedCompany: Company = response;
-          this.store.dispatch(
-            AuthActions.loginSuccess({
-              user: authenticatedCompany,
-              role: 'company',
-            })
-          );
-          this.router.navigate(['/company']);
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Authentication Failed',
-            text: 'Invalid email or password',
-          });
-        }
-      );
+
+  register(registerRequest: any) {
+    const registerUrl = `${this.apiUrl}/auth/register`;
+
+    this.http.post<any>(registerUrl, registerRequest).subscribe(
+      (response: any) => {
+        const decodedToken = this.jwtHelper.decodeToken(response.access_token);
+        const authenticatedUser = this.mapAuthenticatedUser(decodedToken);
+        this.store.dispatch(
+          AuthActions.loginSuccess({
+            user: authenticatedUser,
+            role: decodedToken.role.toLowerCase(),
+            accessToken: response.access_token,
+            refreshToken: response.refresh_token,
+          })
+        );
+        this.router.navigate([`/`]);
+        Swal.fire({
+          icon: 'success',
+          title: 'Registration Successful',
+          text: 'You have successfully registered!',
+        });
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: 'Error occurred during registration',
+        });
+      }
+    );
   }
-  authenticateApplicant(credentials: { email: string; password: string }) {
-    this.http
-      .post<any>(`${this.apiUrl}/applicant/authinticate`, credentials)
-      .subscribe(
-        (response: any) => {
-          const authenticatedApplicant: Applicant = response;
-          this.store.dispatch(
-            AuthActions.loginSuccess({
-              user: authenticatedApplicant,
-              role: 'applicant',
-            })
-          );
-          this.router.navigate(['/jobs']);
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Authentication Failed',
-            text: 'Invalid email or password',
-          });
-        }
-      );
+
+  logout() {
+    const logoutUrl = `${this.apiUrl}/auth/logout`;
+
+    this.http.post(logoutUrl, {}, { observe: 'response' }).subscribe(
+      (response) => {
+        this.store.dispatch(AuthActions.logout());
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Logout Failed',
+          text: 'Error occurred during logout',
+        });
+      }
+    );
   }
-  adminLogout(id: number){
-    this.http.get(`${this.apiUrl}/admin/logout/${id}`).subscribe()
-    this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/login']);
-  }
-  companyLogout(id: number){
-    this.http.get(`${this.apiUrl}/company/logout/${id}`).subscribe()
-    this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/login']);
-  }
-  applicantLogout(id: number){
-    this.http.get(`${this.apiUrl}/applicant/logout/${id}`).subscribe()
-    this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/login']);
+
+  private mapAuthenticatedUser(
+    decodedToken: any
+  ): Admin | Company | Applicant | null {
+    console.log('Decoded Token:', decodedToken);
+    const userRole = decodedToken.role;
+
+    switch (userRole.toLowerCase()) {
+      case 'admin':
+        const admin: Admin = {
+          id: decodedToken.id,
+          name: decodedToken.name,
+          email: decodedToken.email,
+          password: '',
+          state: State.ONLINE,
+        };
+        return admin;
+      case 'company':
+        const company: Company = {
+          id: decodedToken.id,
+          name: decodedToken.name,
+          email: decodedToken.email,
+          plan: {
+            id: decodedToken.plan,
+          },
+          password: '',
+          address: '', // Update with the appropriate field from your token
+          phone: '', // Update with the appropriate field from your token
+          image: '', // Update with the appropriate field from your token
+          state: State.ONLINE,
+        };
+        return company;
+      case 'applicant':
+        const applicant: Applicant = {
+          id: decodedToken.id,
+          firstName: decodedToken.name,
+          lastName: decodedToken.firstName,
+          email: decodedToken.email,
+          password: '',
+          level: '',
+          profile: '',
+          city: '', // Update with the appropriate field from your token
+          cv: '', // Update with the appropriate field from your token
+          state: State.ONLINE,
+        };
+        return applicant;
+      default:
+        return null;
+    }
   }
 }

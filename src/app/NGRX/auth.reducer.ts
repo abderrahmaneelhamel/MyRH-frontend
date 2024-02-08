@@ -5,25 +5,34 @@ export interface AuthState {
   isAuthenticated: boolean;
   role: string;
   user: any | null;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 export const initialState: AuthState = {
   isAuthenticated: false,
   role: '',
   user: null,
+  accessToken: null,
+  refreshToken: null,
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(AuthActions.loginSuccess, (state, { user, role }) => ({
+  on(AuthActions.loginSuccess, (state, { user, role, accessToken, refreshToken }) => ({
     ...state,
     isAuthenticated: true,
-    role: role,
+    role,
     user,
+    accessToken,
+    refreshToken,
   })),
   on(AuthActions.logout, (state) => ({
     ...state,
     isAuthenticated: false,
+    role: '',
     user: null,
+    accessToken: null,
+    refreshToken: null,
   }))
 );

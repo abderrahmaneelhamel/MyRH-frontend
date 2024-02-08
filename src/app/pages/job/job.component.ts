@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Application } from 'src/app/interfaces/Application';
 import { Status } from 'src/app/interfaces/Status';
 import { JobService } from 'src/app/services/JobService/job.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-job',
   templateUrl: './job.component.html',
-  styleUrls: ['./job.component.css']
+  styleUrls: ['./job.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobComponent implements OnInit {
+  readonly columns = ['name', 'email', 'level', 'status', 'Profile', 'application message', 'application status', 'actions'];
   jobId!: number;
   applications: Application[] = [];
 
-  constructor(private route: ActivatedRoute,private jobService: JobService,private sanitizer: DomSanitizer){}
+  constructor(private cdRef: ChangeDetectorRef,private route: ActivatedRoute,private jobService: JobService,private sanitizer: DomSanitizer){}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -27,6 +30,7 @@ export class JobComponent implements OnInit {
     this.jobService.getApplicationById(this.jobId).subscribe(
       (applications) => {
         this.applications = applications;
+        this.cdRef.detectChanges();
       },
       (error) => {
         console.log(error);
@@ -47,6 +51,7 @@ export class JobComponent implements OnInit {
     this.jobService.updateApplication(applicationData).subscribe(
       (applications) => {
         this.applications = applications;
+        this.cdRef.detectChanges();
       },
       (error) => {
         console.log(error);
@@ -71,6 +76,7 @@ export class JobComponent implements OnInit {
     this.jobService.updateApplication(applicationData).subscribe(
       (applications) => {
         this.applications = applications;
+        this.cdRef.detectChanges();
       },
       (error) => {
         console.log(error);

@@ -23,7 +23,7 @@ export class ApplicantService {
 
   addApplicant(applicantData: any): Observable<Applicant> {
     const applicantForm = new FormData();
-          applicantForm.append('firstName', applicantData.firstName);
+          applicantForm.append('name', applicantData.firstName);
           applicantForm.append('lastName', applicantData.lastName);
           applicantForm.append('password', applicantData.password);
           applicantForm.append('email', applicantData.email);

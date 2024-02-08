@@ -32,19 +32,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authState$.subscribe(
-      (state) =>{
-        switch (state.role) {
-          case 'admin':
-            this.authService.adminLogout(state.user.id);
-            break;
-          case 'company':
-            this.authService.companyLogout(state.user.id);
-            break;
-          case 'applicant':
-            this.authService.applicantLogout(state.user.id);
-            break;
-        }
-      })
+    this.authService.logout();
   }
 }

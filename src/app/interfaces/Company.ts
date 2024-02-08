@@ -9,7 +9,7 @@ export interface Company {
   address: string;
   phone: string;
   image: string;
-  plan: Plan;
+  plan?: Plan;
   state: State;
 }
 

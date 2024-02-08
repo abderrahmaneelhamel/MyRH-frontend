@@ -34,6 +34,9 @@ export class ApplyComponent implements OnInit {
     this.store.select(selectLoggedInUser).subscribe((loggedInApplicant) => {
       if (loggedInApplicant) {
         this.applicant = loggedInApplicant;
+        console.log('====================================');
+        console.log(this.applicant.id);
+        console.log('====================================');
       }
     });
     this.route.queryParams.subscribe((params) => {

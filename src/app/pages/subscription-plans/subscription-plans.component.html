@@ -55,7 +55,7 @@
                 </ul>
 
                 <p *ngIf="selectedPlan?.id === 2" class="text-gray-500 font-semibold">Your plan</p>
-                <button *ngIf="!(selectedPlan?.id === 2)" class="inline-flex items-center justify-center px-4 py-2 font-medium text-white uppercase transition-colors bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none" (click)="choosePlan(2)">
+                <button *ngIf="selectedPlan?.id !== 2" class="inline-flex items-center justify-center px-4 py-2 font-medium text-white uppercase transition-colors bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none" (click)="choosePlan(2)">
                     Choose Plan
                 </button>
             </div>

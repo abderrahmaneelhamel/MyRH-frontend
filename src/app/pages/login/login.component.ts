@@ -7,17 +7,19 @@ import { AuthService } from 'src/app/services/authService/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   applicantRegisterForm!: FormGroup;
   companyRegisterForm!: FormGroup;
   roleForm!: FormGroup;
   applicantRole: boolean = true;
 
-  constructor(private authService: AuthService,private applicantService: ApplicantService,private companyService: CompanyService,private fb: FormBuilder) {}
-
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.initializeForms();
@@ -42,29 +44,23 @@ export class LoginComponent implements OnInit{
       city: this.fb.control('', [Validators.required]),
       cv: this.fb.control(null, [Validators.required]),
     });
+    this.companyRegisterForm = this.fb.group({
+      name: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required, Validators.email]),
+      password: this.fb.control('', [Validators.required, Validators.email]),
+      address: this.fb.control('', [Validators.required]),
+      phone: this.fb.control('', [Validators.required]),
+      image: this.fb.control(null, [Validators.required]),
+    });
   }
 
   login() {
     const loginData = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
+      role: this.loginForm.value.role,
     };
-    const role = this.loginForm.value.role;
-
-    switch (role) {
-      case 'admin':
-        this.authService.authenticateAdmin(loginData);
-        break;
-      case 'company':
-        this.authService.authenticateCompany(loginData);
-        break;
-      case 'applicant':
-        this.authService.authenticateApplicant(loginData);
-        break;
-      default:
-        this.authService.authenticateAdmin(loginData);
-        break;
-    }
+    this.authService.authenticate(loginData);
   }
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -72,10 +68,10 @@ export class LoginComponent implements OnInit{
   }
   onImageChange(event: any) {
     const file = event.target.files[0];
-    this.companyRegisterForm.patchValue({ cv: file });
+    this.companyRegisterForm.patchValue({ image: file });
   }
-  roleChoice(){
-    if(this.roleForm.get('role')!.value === 'applicant'){
+  roleChoice() {
+    if (this.roleForm.get('role')!.value === 'applicant') {
       this.applicantRole = true;
       this.applicantRegisterForm.reset();
       this.applicantRegisterForm.patchValue({
@@ -90,7 +86,7 @@ export class LoginComponent implements OnInit{
       });
       this.applicantRegisterForm.markAsUntouched();
       this.applicantRegisterForm.markAsPristine();
-    }else{
+    } else {
       this.applicantRole = false;
       this.companyRegisterForm.reset();
       this.companyRegisterForm.patchValue({
@@ -106,41 +102,30 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  registerApplicant(){
-    const applicantData = {
-      firstName: this.applicantRegisterForm.get('firstName')!.value,
-      lastName: this.applicantRegisterForm.get('lastName')!.value,
-      email: this.applicantRegisterForm.get('email')!.value,
-      password: this.applicantRegisterForm.get('password')!.value,
-      level: this.applicantRegisterForm.get('level')!.value,
-      profile: this.applicantRegisterForm.get('profile')!.value,
-      city: this.applicantRegisterForm.get('city')!.value,
-      cv: this.applicantRegisterForm.get('cv')!.value,
-    };
-    this.applicantService.addApplicant(applicantData).subscribe(
-      (applicant)=>{
-        this.authService.authenticateApplicant({email : applicant.email, password : applicantData.password});
-      },
-      (error)=>{
-        console.log(error);
-      })
-  }
-  registerCompany(){
-    const companyData = {
-      name: this.companyRegisterForm.get('name')!.value,
-      email: this.companyRegisterForm.get('email')!.value,
-      password: this.companyRegisterForm.get('password')!.value,
-      address: this.companyRegisterForm.get('address')!.value,
-      phone: this.companyRegisterForm.get('phone')!.value,
-      image: this.companyRegisterForm.get('image')!.value,
-    };
+  registerApplicant() {
+    const applicantForm = new FormData();
+          applicantForm.append('name', this.applicantRegisterForm.get('firstName')!.value);
+          applicantForm.append('lastName', this.applicantRegisterForm.get('lastName')!.value);
+          applicantForm.append('password', this.applicantRegisterForm.get('password')!.value);
+          applicantForm.append('email', this.applicantRegisterForm.get('email')!.value);
+          applicantForm.append('level', this.applicantRegisterForm.get('level')!.value);
+          applicantForm.append('profile', this.applicantRegisterForm.get('profile')!.value);
+          applicantForm.append('city', this.applicantRegisterForm.get('city')!.value);
+          applicantForm.append('file', this.applicantRegisterForm.get('cv')!.value as File);
+          applicantForm.append('role', 'APPLICANT');
 
-    this.companyService.addCompany(companyData).subscribe(
-      (company) => {
-        this.authService.authenticateApplicant({email : company.email, password : companyData.password});
-      },
-      (error)=>{
-        console.log(error);
-      })
+    this.authService.register(applicantForm);
+  }
+  registerCompany() {
+    const companyForm = new FormData();
+          companyForm.append('name', this.companyRegisterForm.get('name')!.value);
+          companyForm.append('email', this.companyRegisterForm.get('email')!.value);
+          companyForm.append('password', this.companyRegisterForm.get('password')!.value);
+          companyForm.append('address', this.companyRegisterForm.get('address')!.value);
+          companyForm.append('phone', this.companyRegisterForm.get('phone')!.value);
+          companyForm.append('file', this.companyRegisterForm.get('image')!.value as File);
+          companyForm.append('role', 'COMPANY');
+
+    this.authService.register(companyForm);
   }
 }
