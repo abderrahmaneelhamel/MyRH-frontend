@@ -28,6 +28,11 @@
                       </ng-container>
                     </ng-container>
                     <ng-container *ngIf="(authState$ | async) as authState">
+                      <ng-container *ngIf="authState.isAuthenticated && authState.role === 'admin'">
+                        <a routerLink="/quiz" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Quiz</a>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="(authState$ | async) as authState">
                       <ng-container *ngIf="authState.isAuthenticated && authState.role === 'company'">
                         <a routerLink="/company" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Company</a>
                       </ng-container>

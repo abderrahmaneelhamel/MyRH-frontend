@@ -1,0 +1,13 @@
+<div [formGroup]="answerForm" class="bg-gray-100 p-4 rounded-md mb-4">
+  <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Answer Content:</label>
+  <input type="text" id="content" formControlName="content" required (input)="onContentChange()"
+         class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 mb-4">
+
+  <label class="flex items-center">
+    <input type="checkbox" [checked]="answerForm.get('AnswerStatus')?.value === 'RIGHT'" (change)="AnswerStatus(answerForm.get('AnswerStatus')?.value)"
+           class="mr-2 focus:outline-none">
+    <span class="text-sm font-semibold" [class.text-green-500]="answerForm.get('AnswerStatus')?.value === 'RIGHT'">
+      Correct Answer
+    </span>
+  </label>
+</div>

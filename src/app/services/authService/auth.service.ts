@@ -103,7 +103,6 @@ export class AuthService {
   private mapAuthenticatedUser(
     decodedToken: any
   ): Admin | Company | Applicant | null {
-    console.log('Decoded Token:', decodedToken);
     const userRole = decodedToken.role;
 
     switch (userRole.toLowerCase()) {

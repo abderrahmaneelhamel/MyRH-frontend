@@ -1,0 +1,15 @@
+<!-- question-form.component.html -->
+<div *ngIf="questionForm" [formGroup]="questionForm" class="bg-gray-100 p-4 rounded-md mb-4">
+  <label for="question" class="block text-gray-700 text-sm font-bold mb-2">Question:</label>
+  <input type="text" id="question" formControlName="question" required
+         class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 mb-4">
+
+  <div formArrayName="answers">
+    <div *ngFor="let answer of answers.controls; let i = index" class="flex items-center mb-2">
+      <app-answer-form (answerChanged)="updateAnswersArray($event)"></app-answer-form>
+      <button type="button" (click)="removeAnswer(i)" class="ml-2 bg-red-500 text-white px-3 py-1 rounded-md">Remove Answer</button>
+    </div>
+  </div>
+
+  <button type="button" (click)="addAnswer()" class="bg-blue-500 text-white px-3 py-1 rounded-md">Add Answer</button>
+</div>

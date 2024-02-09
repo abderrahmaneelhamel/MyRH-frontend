@@ -1,4 +1,6 @@
 import { State } from "./State";
+import { ApplicantTest } from "./applicant-test";
+import { Badge } from "./badge";
 
 export interface Applicant {
   id?: number;
@@ -11,4 +13,6 @@ export interface Applicant {
   city: string;
   cv: string;
   state: State;
+  badges?: Badge[];
+  applicantTests?: ApplicantTest[];
 }

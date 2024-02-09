@@ -1,0 +1,25 @@
+<form [formGroup]="testForm" class="max-w-2xl mx-auto mt-8">
+  <div class="mb-4">
+    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Test Name:</label>
+    <input type="text" id="name" formControlName="name" required
+           class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+  </div>
+
+  <div formArrayName="questions">
+    <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="mb-4">
+      <app-question-form (questionChanged)="updateQuestionsArray($event)"></app-question-form>
+
+      <button type="button" (click)="removeQuestion(i)"
+              class="text-red-500 hover:text-red-700 font-bold focus:outline-none">
+        Remove Question
+      </button>
+    </div>
+  </div>
+
+  <button type="button" (click)="addQuestion()" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">
+    Add Question
+  </button>
+  <button type="button" (click)="saveTest()" class="bg-green-500 text-white px-4 py-2 rounded-md">
+    Save Test
+  </button>
+</form>

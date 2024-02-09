@@ -13,10 +13,5 @@ export class HomeComponent {
   authState$ = this.store.select(createFeatureSelector<AuthState>('auth'));
 
   ngOnInit(): void {
-    this.authState$.subscribe((state) => {
-      console.log('====================================');
-      console.log(state);
-      console.log('====================================');
-    });
   }
 }

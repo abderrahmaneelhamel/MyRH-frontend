@@ -34,6 +34,9 @@ import { SubscriptionPlansComponent } from './pages/subscription-plans/subscript
 import { MyApplicationsComponent } from './pages/my-applications/my-applications.component';
 import { EffectsModule } from '@ngrx/effects';
 import { CustomInterceptor } from "./interceptor/costum.interceptor";
+import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
+import { QuestionFormComponent } from './components/question-form/question-form.component';
+import { AnswerFormComponent } from './components/answer-form/answer-form.component';
 // import { AuthEffects } from 'src/app/NGRX/auth.effects';
 
 @NgModule({
@@ -56,6 +59,9 @@ import { CustomInterceptor } from "./interceptor/costum.interceptor";
     JobComponent,
     SubscriptionPlansComponent,
     MyApplicationsComponent,
+    CreateQuizComponent,
+    QuestionFormComponent,
+    AnswerFormComponent,
   ],
   imports: [
     BrowserModule,
