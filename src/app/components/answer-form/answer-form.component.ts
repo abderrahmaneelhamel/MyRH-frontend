@@ -11,6 +11,7 @@ import { Answer } from 'src/app/interfaces/answer';
 })
 export class AnswerFormComponent implements OnInit {
   private answerCounter = 0;
+  @Input() id!: number;
   @Input() answerForm!: FormGroup;
   @Output() answerChanged = new EventEmitter<Answer>();
 
@@ -22,7 +23,7 @@ export class AnswerFormComponent implements OnInit {
 
   private initializeForm(): void {
     this.answerForm = this.fb.group({
-      id: [this.generateUniqueId()],
+      id: [this.id],
       content: ['', [Validators.required]],
       AnswerStatus: [AnswerStatus.WRONG, [Validators.required]]
     });
