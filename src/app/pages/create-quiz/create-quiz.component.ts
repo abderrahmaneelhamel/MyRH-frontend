@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { QuizService } from 'src/app/services/QuizService/quiz.service';
 import { Question } from 'src/app/interfaces/question';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-quiz',
@@ -13,7 +14,7 @@ export class CreateQuizComponent implements OnInit {
   testForm!: FormGroup;
   questionsArray: Question[] = [];
 
-  constructor(private fb: FormBuilder, private quizService: QuizService) { }
+  constructor(private fb: FormBuilder, private quizService: QuizService,private router: Router) { }
 
   ngOnInit(): void {
     this.testForm = this.fb.group({
@@ -44,16 +45,17 @@ export class CreateQuizComponent implements OnInit {
         name: this.testForm.value.name,
         questions: this.questionsArray,
       }
-      console.log('====================================');
-      console.log(testFormData);
-      console.log('====================================');
       
-      // Add this line to update questionsArray
       this.questionsArray = testFormData.questions;
 
       this.quizService.createTest(testFormData).subscribe(
         (response) => {
-          console.log('Test saved successfully:', response);
+          Swal.fire({
+            icon: 'success',
+            title: 'success',
+            text: 'Test Saved successfully',
+          });
+          this.router.navigate(['/tests']);
         },
         (error) => {
           console.error('Error saving test:', error);
@@ -71,8 +73,6 @@ export class CreateQuizComponent implements OnInit {
       // If the question is already in the array, update it
       this.questionsArray[index] = question;
     }
-  
-    console.log('Updated Questions Array:', this.questionsArray);
   }
   
   

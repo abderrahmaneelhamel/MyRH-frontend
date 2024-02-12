@@ -12,8 +12,10 @@ import { JobComponent } from './pages/job/job.component';
 import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans.component';
 import { MyApplicationsComponent } from './pages/my-applications/my-applications.component';
 import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
+import { TestsComponent } from './pages/tests/tests.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
-import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +28,12 @@ const routes: Routes = [
   {
     path: 'quiz',
     component: CreateQuizComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'tests',
+    component: TestsComponent,
     canActivate: [AuthGuard],
     data: { role: 'admin' },
   },

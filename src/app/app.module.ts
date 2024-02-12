@@ -39,6 +39,8 @@ import { QuestionFormComponent } from './components/question-form/question-form.
 import { AnswerFormComponent } from './components/answer-form/answer-form.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
+import { TestsComponent } from './pages/tests/tests.component';
+import { TestCardComponent } from './components/test-card/test-card.component';
 // import { AuthEffects } from 'src/app/NGRX/auth.effects';
 
 @NgModule({
@@ -64,8 +66,10 @@ import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
     CreateQuizComponent,
     QuestionFormComponent,
     AnswerFormComponent,
-    QuizComponent,
+    TestCardComponent,
+    TestsComponent,
     QuizzTestComponent,
+    QuizComponent,
   ],
   imports: [
     BrowserModule,
