@@ -11,7 +11,7 @@
                         <svg x-show="!isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" />
                         </svg>
-                    
+
                         <svg x-show="isOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -42,7 +42,7 @@
                         <a routerLink="/subscription-plans" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">subscription plans</a>
                       </ng-container>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="(authState$ | async) as authState">
                       <ng-container *ngIf="authState.isAuthenticated && authState.role === 'applicant'">
                         <a routerLink="/jobs" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">Jobs</a>
@@ -53,6 +53,11 @@
                         <a routerLink="/my-applications" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">My Applications</a>
                       </ng-container>
                     </ng-container>
+                  <ng-container *ngIf="(authState$ | async) as authState">
+                    <ng-container *ngIf="authState.isAuthenticated && authState.role === 'applicant'">
+                      <a routerLink="/test" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 hover:bg-gray-100">test skills</a>
+                    </ng-container>
+                  </ng-container>
                 </div>
                 <ng-container *ngIf="(authState$ | async) as authState">
                     <div *ngIf="authState.isAuthenticated; else notAuthenticated" class="flex items-center">
@@ -64,7 +69,7 @@
                       </div>
                     </ng-template>
                   </ng-container>
-                  
+
                   <div class="mx-5 flex items-center mt-4 lg:mt-0" *ngIf="(authState$ | async) as authState">
                     <button type="button" class="flex items-center focus:outline-none" aria-label="Toggle Profile Dropdown">
                       <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
@@ -73,7 +78,7 @@
                       </div>
                       <span class="mx-3 text-gray-700">{{ authState.user?.name }}</span>
                     </button>
-                  </div>                  
+                  </div>
             </div>
         </div>
     </div>

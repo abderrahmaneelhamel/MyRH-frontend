@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Test } from 'src/app/interfaces/test';
 import { Badge } from 'src/app/interfaces/badge';
 import { Applicant } from 'src/app/interfaces/Applicant';
+import {Job} from "../../interfaces/Job";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class QuizService {
 
   getTestById(id: number): Observable<Test> {
     return this.http.get<Test>(`${this.apiUrl}/test/${id}`);
+  }
+
+  getAllTest(): Observable<Test[]> {
+    return this.http.get<Test[]>(`${this.apiUrl}/tests`);
   }
 
   createTest(test: any): Observable<Test> {
