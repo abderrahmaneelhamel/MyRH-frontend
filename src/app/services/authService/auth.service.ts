@@ -134,7 +134,7 @@ export class AuthService {
         const applicant: Applicant = {
           id: decodedToken.id,
           firstName: decodedToken.name,
-          lastName: decodedToken.firstName,
+          lastName: decodedToken.lastName,
           email: decodedToken.email,
           password: '',
           level: '',
