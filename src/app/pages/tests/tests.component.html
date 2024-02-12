@@ -1,0 +1,9 @@
+<!-- tests.component.html -->
+<div class="container mx-auto mt-8">
+  <div *ngIf="tests.length === 0" class="flex justify-center items-center">
+    <h1 class="text-gray-700 text-2xl">No Tests to show</h1>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <app-test-card *ngFor="let test of tests" [test]="test"></app-test-card>
+  </div>
+</div>

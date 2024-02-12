@@ -12,7 +12,11 @@ export class QuizService {
 
   private apiUrl = 'http://localhost:8080/api/quiz';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  getAllTest(): Observable<Test[]> {
+    return this.http.get<Test[]>(`${this.apiUrl}/tests`);
+  }
 
   getTestById(id: number): Observable<Test> {
     return this.http.get<Test>(`${this.apiUrl}/test/${id}`);

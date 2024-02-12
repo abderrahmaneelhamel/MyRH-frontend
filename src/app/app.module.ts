@@ -37,6 +37,8 @@ import { CustomInterceptor } from "./interceptor/costum.interceptor";
 import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
 import { AnswerFormComponent } from './components/answer-form/answer-form.component';
+import { TestsComponent } from './pages/tests/tests.component';
+import { TestCardComponent } from './components/test-card/test-card.component';
 // import { AuthEffects } from 'src/app/NGRX/auth.effects';
 
 @NgModule({
@@ -62,6 +64,8 @@ import { AnswerFormComponent } from './components/answer-form/answer-form.compon
     CreateQuizComponent,
     QuestionFormComponent,
     AnswerFormComponent,
+    TestsComponent,
+    TestCardComponent,
   ],
   imports: [
     BrowserModule,
