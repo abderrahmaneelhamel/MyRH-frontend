@@ -13,6 +13,9 @@ import { SubscriptionPlansComponent } from './pages/subscription-plans/subscript
 import { MyApplicationsComponent } from './pages/my-applications/my-applications.component';
 import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
 import { TestsComponent } from './pages/tests/tests.component';
+import { QuizComponent } from './pages/quiz/quiz.component';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -61,6 +64,18 @@ const routes: Routes = [
   {
     path: 'apply',
     component: ApplyComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'applicant' },
+  },
+  {
+    path: 'test',
+    component: QuizComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'applicant' },
+  },
+  {
+    path: 'testquizz',
+    component: QuizzTestComponent,
     canActivate: [AuthGuard],
     data: { role: 'applicant' },
   },
