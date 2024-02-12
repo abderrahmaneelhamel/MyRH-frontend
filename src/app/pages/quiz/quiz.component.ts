@@ -29,4 +29,13 @@ export class QuizComponent implements OnInit {
       }
     );
   }
+
+  startquizz(test: Test) {
+    if (test.id !== undefined) {
+      this.router.navigate(['/testquizz'], { queryParams: { testId: test.id.toString() } });
+    } else {
+      console.error('test ID is undefined');
+    }
+  }
+
 }
