@@ -15,6 +15,7 @@ import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
 import { TestsComponent } from './pages/tests/tests.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
 import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
+import {ProfileComponent} from "./pages/profile/profile.component";
 
 
 
@@ -83,6 +84,12 @@ const routes: Routes = [
   {
     path: 'my-applications',
     component: MyApplicationsComponent,
+    canActivate: [AuthGuard],
+    data: {role: 'applicant'},
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard],
     data: { role: 'applicant' },
   },

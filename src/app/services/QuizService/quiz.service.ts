@@ -15,12 +15,14 @@ export class QuizService {
 
   constructor(private http: HttpClient) {}
 
-  getAllTest(): Observable<Test[]> {
-    return this.http.get<Test[]>(`${this.apiUrl}/tests`);
-  }
+
 
   getTestById(id: number): Observable<Test> {
     return this.http.get<Test>(`${this.apiUrl}/test/${id}`);
+  }
+
+  getAllTest(): Observable<Test[]> {
+    return this.http.get<Test[]>(`${this.apiUrl}/tests`);
   }
 
   createTest(test: any): Observable<Test> {

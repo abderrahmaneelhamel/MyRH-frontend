@@ -41,6 +41,7 @@ import { QuizComponent } from './pages/quiz/quiz.component';
 import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
 import { TestsComponent } from './pages/tests/tests.component';
 import { TestCardComponent } from './components/test-card/test-card.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 // import { AuthEffects } from 'src/app/NGRX/auth.effects';
 
 @NgModule({
@@ -70,6 +71,7 @@ import { TestCardComponent } from './components/test-card/test-card.component';
     TestsComponent,
     QuizzTestComponent,
     QuizComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
