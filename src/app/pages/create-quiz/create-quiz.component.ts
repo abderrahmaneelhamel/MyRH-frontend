@@ -40,7 +40,10 @@ export class CreateQuizComponent implements OnInit {
   }
 
   saveTest(): void {
-      const testFormData = this.testForm.value;
+      const testFormData = {
+        name: this.testForm.value.name,
+        questions: this.questionsArray,
+      }
       console.log('====================================');
       console.log(testFormData);
       console.log('====================================');

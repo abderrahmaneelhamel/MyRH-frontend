@@ -13,9 +13,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./question-form.component.css']
 })
 export class QuestionFormComponent implements OnInit {
-  private answerCounter = 0;
   @Input() questionForm!: FormGroup;
   @Output() questionChanged = new EventEmitter<Question>();
+  answersArray : Answer[] = [];
 
   constructor(private fb: FormBuilder) { }
 
@@ -32,14 +32,21 @@ export class QuestionFormComponent implements OnInit {
 
   addAnswer(): void {
     const newAnswer = this.fb.group({
-      id: [this.generateUniqueId()],
       content: ['', [Validators.required]],
       status: [AnswerStatus.WRONG, [Validators.required]]
     });
   
     // Subscribe only once when the answer is added
-    newAnswer.valueChanges.pipe(take(1)).subscribe(() => {
-      this.updateAnswersArray();
+    newAnswer.valueChanges.pipe(
+      take(1),
+    ).subscribe(value => {
+      if (value) {
+        const answer: Answer = {
+          content: value.content || '',
+          status: value.status || AnswerStatus.WRONG,
+        };
+        this.updateAnswersArray(answer);
+      }
     });
   
     if (this.answers.length < 4) {
@@ -55,32 +62,39 @@ export class QuestionFormComponent implements OnInit {
 
   removeAnswer(index: number): void {
     this.answers.removeAt(index);
-    this.updateAnswersArray();
+    this.answersArray.splice(index, 1);
+    // Create the Question object
+    const question: Question = {
+      question: this.questionForm.get('question')?.value,
+      answers: [...this.answersArray], // Make a copy of the array to avoid direct manipulation
+    };
+  
+    // Emit the updated question, including answers
+    this.questionChanged.emit(question);
   }
 
   updateAnswersArray(emittedAnswer?: Answer): void {
     // Directly use the value property of the form controls
-    const answersArray: Answer[] = this.answers.value;
-
+  
     console.log('====================================');
-    console.log('answersArray : ',answersArray,'emittedAnswer : ',emittedAnswer);
+    console.log('answersArray : ', this.answersArray, 'emittedAnswer : ', emittedAnswer);
     console.log('====================================');
   
     // If an answer is emitted, find and update it in the array
     if (emittedAnswer) {
-      const existingAnswerIndex = answersArray.findIndex(a => a.id === emittedAnswer.id);
+      const existingAnswerIndex = this.answersArray.findIndex(a => a.id === emittedAnswer.id);
   
       if (existingAnswerIndex !== -1) {
         // Update the existing answer
-        answersArray[existingAnswerIndex] = emittedAnswer;
+        this.answersArray[existingAnswerIndex] = emittedAnswer;
       } else {
         // Add the emitted answer to the array
-        answersArray.push(emittedAnswer);
+        this.answersArray.push(emittedAnswer);
       }
     }
   
     // Validate the number of answers
-    if (answersArray.length > 4) {
+    if (this.answersArray.length > 4) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -92,14 +106,10 @@ export class QuestionFormComponent implements OnInit {
     // Create the Question object
     const question: Question = {
       question: this.questionForm.get('question')?.value,
-      answers: answersArray,
+      answers: [...this.answersArray], // Make a copy of the array to avoid direct manipulation
     };
   
     // Emit the updated question, including answers
     this.questionChanged.emit(question);
-  }
-
-  private generateUniqueId(): number {
-    return this.answerCounter++;
   }
 }
