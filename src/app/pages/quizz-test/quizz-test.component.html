@@ -6,7 +6,7 @@
       <hr class="my-4 border-t border-blue-500 h-4"><!--      <button class="mt-2 px-4 py-2 bg-green-500 border border-gray-500 text-white rounded-full">ahead-of-time compilation</button>-->
       <ng-container *ngIf="test && test.questions">
         <div *ngFor="let question of test.questions">
-          <h2>{{ question.question }}</h2>
+          <h2>{{ question.question }} ?</h2>
           <div *ngFor="let answer of question.answers">
             <button class="mt-2 px-4 py-2 bg-white-500 border border-gray-500 text-black rounded-full">{{ answer.content }}</button>
           </div>
