@@ -23,10 +23,6 @@ export class QuizService {
     return this.http.get<Test>(`${this.apiUrl}/test/${id}`);
   }
 
-  getAllTest(): Observable<Test[]> {
-    return this.http.get<Test[]>(`${this.apiUrl}/tests`);
-  }
-
   createTest(test: any): Observable<Test> {
     return this.http.post<Test>(`${this.apiUrl}/test`, test);
   }

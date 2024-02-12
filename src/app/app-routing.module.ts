@@ -14,6 +14,7 @@ import { MyApplicationsComponent } from './pages/my-applications/my-applications
 import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
 import { TestsComponent } from './pages/tests/tests.component';
 import { QuizComponent } from './pages/quiz/quiz.component';
+import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
 
 
 
