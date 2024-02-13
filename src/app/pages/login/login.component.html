@@ -9,12 +9,6 @@
               <div class="flip-card__front">
                  <div class="title">Log in</div>
                  <form class="flip-card__form" [formGroup]="loginForm" (ngSubmit)="login()">
-                     <label for="role" class="font-bold">Role</label>
-                     <select formControlName="role" class="flip-card__input">
-                        <option selected value="admin">Admin</option>
-                        <option value="company">Company</option>
-                        <option value="applicant">Applicant</option>
-                     </select>
                     <input class="flip-card__input" formControlName="email" placeholder="Email" type="email">
                     <input class="flip-card__input" formControlName="password" placeholder="Password" type="password">
                     <button type="submit" class="flip-card__btn">Let`s go!</button>

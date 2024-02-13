@@ -1,11 +1,11 @@
 <div class="m-6 p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
   <div>
     <div class="text-xl font-medium text-black">Quiz Test {{ test.name }}</div>
-    <p class="text-gray-500" [@fade]="remainingTime <= 10 ? 'red' : 'normal'">Time Left: {{ formatTime(remainingTime) }}</p>
+    <p class="text-blue-500" [@fade]="remainingTime <= 10 ? 'red' : 'normal'">Time Left: {{ formatTime(remainingTime) }}</p>
     <div class="mt-4 text-gray-600">
-      <div class="relative w-full h-4 bg-blue-500">
+      <div class="relative w-full h-4 bg-white">
         <div
-          class="absolute h-full bg-gray-500 transition-all ease-out duration-300"
+          class="absolute h-full bg-blue-500 transition-all ease-out duration-300"
           [style.width.%]="(remainingTime / 30) * 100"
         ></div>
       </div>

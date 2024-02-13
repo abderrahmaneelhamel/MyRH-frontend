@@ -23,7 +23,7 @@ export class AuthService {
     private router: Router
   ) {}
 
-  authenticate(credentials: { email: string; password: string; role: string }) {
+  authenticate(credentials: { email: string; password: string;}) {
     const authenticateUrl = `${this.apiUrl}/auth/authenticate`;
 
     this.http.post<any>(authenticateUrl, credentials).subscribe(

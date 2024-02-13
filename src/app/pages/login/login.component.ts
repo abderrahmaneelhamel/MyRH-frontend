@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: this.fb.control('', [Validators.required]),
       password: this.fb.control('', [Validators.required]),
-      role: this.fb.control('admin', [Validators.required]),
     });
     this.roleForm = this.fb.group({
       role: this.fb.control('applicant', [Validators.required]),
@@ -58,7 +57,6 @@ export class LoginComponent implements OnInit {
     const loginData = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
-      role: this.loginForm.value.role,
     };
     this.authService.authenticate(loginData);
   }

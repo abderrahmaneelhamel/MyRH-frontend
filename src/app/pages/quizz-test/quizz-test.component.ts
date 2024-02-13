@@ -19,8 +19,8 @@ import Swal from 'sweetalert2';
     ]),
     trigger('barWidth', [
       state('red', style({ width: '100%' })),
-      state('red', style({ width: '10%', backgroundColor: 'red' })),
-      transition('red <=> red', animate('300ms ease-in-out')),
+      state('normal', style({ width: '10%', backgroundColor: 'red' })),
+      transition('red <=> normal', animate('300ms ease-in-out')),
     ]),
   ],
 })
