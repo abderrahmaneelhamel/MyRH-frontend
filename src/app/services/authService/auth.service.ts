@@ -20,25 +20,16 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private store: Store,
-    private router: Router
+    private router: Router,
   ) {}
 
-  authenticate(credentials: { email: string; password: string;}) {
+
+  authenticate(credentials: { email: string; password: string }) {
     const authenticateUrl = `${this.apiUrl}/auth/authenticate`;
 
     this.http.post<any>(authenticateUrl, credentials).subscribe(
       (response: any) => {
-        const decodedToken = this.jwtHelper.decodeToken(response.access_token);
-        const authenticatedUser = this.mapAuthenticatedUser(decodedToken);
-        this.store.dispatch(
-          AuthActions.loginSuccess({
-            user: authenticatedUser,
-            role: decodedToken.role.toLowerCase(),
-            accessToken: response.access_token,
-            refreshToken: response.refresh_token,
-          })
-        );
-        this.router.navigate([`/`]);
+        this.handleAuthenticationResponse(response);
       },
       (error) => {
         Swal.fire({
@@ -49,23 +40,28 @@ export class AuthService {
       }
     );
   }
+  
+
+  private handleAuthenticationResponse(response: any) {
+    const decodedToken = this.jwtHelper.decodeToken(response.access_token);
+    const authenticatedUser = this.mapAuthenticatedUser(decodedToken);
+    this.store.dispatch(
+      AuthActions.loginSuccess({
+        user: authenticatedUser,
+        role: decodedToken.role.toLowerCase(),
+        accessToken: response.access_token,
+        refreshToken: response.refresh_token,
+      })
+    );
+    this.router.navigate(['/']);
+  }
 
   register(registerRequest: any) {
     const registerUrl = `${this.apiUrl}/auth/register`;
 
     this.http.post<any>(registerUrl, registerRequest).subscribe(
       (response: any) => {
-        const decodedToken = this.jwtHelper.decodeToken(response.access_token);
-        const authenticatedUser = this.mapAuthenticatedUser(decodedToken);
-        this.store.dispatch(
-          AuthActions.loginSuccess({
-            user: authenticatedUser,
-            role: decodedToken.role.toLowerCase(),
-            accessToken: response.access_token,
-            refreshToken: response.refresh_token,
-          })
-        );
-        this.router.navigate([`/`]);
+        this.handleAuthenticationResponse(response);
         Swal.fire({
           icon: 'success',
           title: 'Registration Successful',

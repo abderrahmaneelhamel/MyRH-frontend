@@ -1,4 +1,5 @@
 import { Applicant } from "./Applicant";
+import { Badge } from "./badge";
 import { Question } from "./question";
 
 export interface Test {
@@ -6,4 +7,5 @@ export interface Test {
     name: string;
     questions: Question[];
     applicants: Applicant[];
-  }
+    badge: Badge;
+}

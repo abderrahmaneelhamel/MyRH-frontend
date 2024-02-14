@@ -32,7 +32,6 @@ import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.compone
 import { JobComponent } from './pages/job/job.component';
 import { SubscriptionPlansComponent } from './pages/subscription-plans/subscription-plans.component';
 import { MyApplicationsComponent } from './pages/my-applications/my-applications.component';
-import { EffectsModule } from '@ngrx/effects';
 import { CustomInterceptor } from "./interceptor/costum.interceptor";
 import { CreateQuizComponent } from './pages/create-quiz/create-quiz.component';
 import { QuestionFormComponent } from './components/question-form/question-form.component';
@@ -42,7 +41,7 @@ import { QuizzTestComponent } from './pages/quizz-test/quizz-test.component';
 import { TestsComponent } from './pages/tests/tests.component';
 import { TestCardComponent } from './components/test-card/test-card.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-// import { AuthEffects } from 'src/app/NGRX/auth.effects';
+
 
 @NgModule({
   declarations: [
@@ -77,7 +76,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({ auth: authReducer }),
-    // EffectsModule.forRoot([AuthEffects]),
     BrowserAnimationsModule,
     TableModule,
     TagModule,
@@ -86,9 +84,9 @@ import { ProfileComponent } from './pages/profile/profile.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-      TuiRootModule,
-      TuiDialogModule,
-      TuiAlertModule
+    TuiRootModule,
+    TuiDialogModule,
+    TuiAlertModule
 ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer},
     {

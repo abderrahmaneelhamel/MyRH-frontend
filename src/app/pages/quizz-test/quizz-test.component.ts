@@ -1,11 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Test } from '../../interfaces/test';
 import { QuizService } from '../../services/QuizService/quiz.service';
 import { Applicant } from 'src/app/interfaces/Applicant';
 import { AnswerStatus } from 'src/app/interfaces/AnswerStatus';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import Swal from 'sweetalert2';
+import { AuthState } from 'src/app/NGRX/auth.reducer';
+import { AuthService } from 'src/app/services/authService/auth.service';
+import { Store, createFeatureSelector } from '@ngrx/store';
+import { filter, tap } from 'rxjs';
+import { selectLoggedInUser } from 'src/app/NGRX/auth.selectors';
 
 @Component({
   selector: 'app-quizz-test',
@@ -34,8 +39,9 @@ export class QuizzTestComponent implements OnInit, OnDestroy {
   remainingTime = 30;
   intervalId: any;
   barState = 'red';
+  authState$ = this.store.select(createFeatureSelector<AuthState>('auth'));
 
-  constructor(private route: ActivatedRoute, private quizService: QuizService) {}
+  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router,private store: Store,private cdr: ChangeDetectorRef,private authService : AuthService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -43,10 +49,14 @@ export class QuizzTestComponent implements OnInit, OnDestroy {
     });
     this.getTest();
     this.startTimer();
+    this.store.select(selectLoggedInUser).subscribe((loggedInApplicant) => {
+      if (loggedInApplicant) {
+        this.applicant = loggedInApplicant;
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    // Clear the interval when the component is destroyed
     clearInterval(this.intervalId);
   }
 
@@ -69,7 +79,6 @@ export class QuizzTestComponent implements OnInit, OnDestroy {
       } else {
         this.quizCompleted = true;
         this.submitTest();
-        clearInterval(this.intervalId); // Clear the interval
       }
     }, 1000);
   }
@@ -86,7 +95,6 @@ export class QuizzTestComponent implements OnInit, OnDestroy {
       if (this.currentQuestionIndex === this.test.questions.length) {
         this.quizCompleted = true;
         this.submitTest();
-        clearInterval(this.intervalId); // Clear the interval
       }
     }
   }
@@ -118,25 +126,39 @@ export class QuizzTestComponent implements OnInit, OnDestroy {
   }
 
   updateBarState(): void {
-    // Adjust this threshold as needed
     this.barState = this.remainingTime <= 10 ? 'red' : 'red';
   }
 
   submitTest(): void {
-    const passed = this.evaluateTest();
-
-    if (passed) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'You passed the test!',
-      });
+    clearInterval(this.intervalId);
+  
+    if (this.applicant && this.applicant.id) {
+      const passed = this.evaluateTest();
+      if (passed) {
+        this.quizService.assignBadgeToApplicant(this.applicant.id, this.test.badge.id).subscribe(
+          (applicant) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'You passed the test!',
+            });
+  
+            this.router.navigate(['/profile']);
+          },
+          (error) => {
+            console.error('Error assigning badge:', error);
+          }
+        );
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Unfortunately',
+          text: 'You did not pass the test',
+        });
+      }
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Unfortunately',
-        text: 'You did not pass the test',
-      });
+      console.error('Applicant is null or does not have an ID');
     }
-  }
+  }  
+  
 }

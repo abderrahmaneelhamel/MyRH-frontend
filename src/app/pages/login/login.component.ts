@@ -60,6 +60,8 @@ export class LoginComponent implements OnInit {
     };
     this.authService.authenticate(loginData);
   }
+
+
   onFileChange(event: any) {
     const file = event.target.files[0];
     this.applicantRegisterForm.patchValue({ cv: file });
